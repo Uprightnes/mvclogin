@@ -1,0 +1,175 @@
+// using System.Net;
+// using LMVC.Models;
+// using Microsoft.AspNetCore.Mvc;
+// using Newtonsoft.Json;
+
+// namespace LMVC.Controllers
+// {
+//     public class LoginController : Controller
+//     {
+//         // GET: Login
+//         public ActionResult Index()
+//         {
+//             return View();
+//         }
+
+
+
+//         //"https://map.phed.com.ng/api/PHEDConnectApi/Login"
+//         [HttpPost]
+//         public async Task<ActionResult> Index(LoginViewModel model)
+//         {
+//             if (ModelState.IsValid)
+//             {
+//                 // Call the external endpoint for authentication
+//                 var response = await AuthenticateUser(model);
+
+//                 if (response != null)
+//                 {
+                    
+//                     Console.WriteLine($"Status: {response.Status}");
+//                     // Redirect to Success/Index with the authentication response data
+//                     //return RedirectToAction("Success", "Index", responseData);
+//                     Console.WriteLine("AuthenticateUser is completed");
+//                     // Store the authentication result in ViewBag to display it in the view
+//                     ViewBag.AuthenticationResult = response;
+//                     return RedirectToAction("Index", "Success");
+//                 }
+//                 else
+//                 {
+//                     // Other errors
+//                     // string errorResponse = await response.Content.ReadAsStringAsync();
+//                     string errorResponse = "something went wrong";
+//                     TempData["ErrorMessage"] = errorResponse; // Store error message in TempData
+//                     return RedirectToAction("ErrorPage", "Home"); // Redirect to error page
+//                 }
+
+
+//             }
+//             Console.WriteLine("it hits here");
+//             // If ModelState is not valid, or authentication failed, return to the login page with errors
+//             return View(model);
+
+//         }
+//         private async Task<AuthenticationResponse> AuthenticateUser(LoginViewModel model)
+//         {
+//             string externalEndpointUrl = "https://map.phed.com.ng/api/PHEDConnectApi/Login";
+
+//             HttpResponseMessage response;
+//             AuthenticationResponse data;
+
+//             try
+//             {
+//                 using (HttpClient client = new HttpClient())
+//                 {
+//                     response = await client.PostAsJsonAsync(externalEndpointUrl, model);
+
+//                     if (response.IsSuccessStatusCode)
+//                     {
+//                         // Authentication successful, deserialize response and redirect to SuccessPage
+//                         string responseBody = await response.Content.ReadAsStringAsync();
+//                         var responseData = JsonConvert.DeserializeObject<AuthenticationResponse>(responseBody);
+//                         Console.WriteLine($"Status: {responseData.Status}");
+//                         // Redirect to Success/Index with the authentication response data
+//                         //return RedirectToAction("Success", "Index", responseData);
+//                         Console.WriteLine("AuthenticateUser is completed");
+
+//                         data=responseData;
+//                         return data;
+                    
+//                     }
+//                      else
+//                 {
+//                     // Other errors
+//                     string errorResponse = await response.Content.ReadAsStringAsync();
+//                     TempData["ErrorMessage"] = errorResponse; // Store error message in TempData
+//                     // Redirect to error page
+//                     return null;
+//                 }
+//                 }
+
+//             }
+//             catch (Exception ex)
+//             {
+//                 // Handle other unexpected errors
+//                 TempData["ErrorMessage"] = ex.Message; // Store error message in TempData
+//                 // return RedirectToAction("Error", "Shared"); // Redirect to error page
+//                 response = new HttpResponseMessage(HttpStatusCode.BadRequest);
+//                 return null;
+//             }
+//         }
+
+
+// @model LMVC.Models.AuthenticationResponse
+// @{
+//     ViewBag.Title = "Success";
+// }
+
+// <!-- Your existing login form here -->
+
+// @* @if (ViewBag.AuthenticationResult != null) *@
+// @* { *@
+//     <h1>Authentication Result</h1>
+//     <p>Status: @ViewBag.response.Status</p>
+//     <p>StaffId: @ViewBag.response.StaffId</p>
+//     <p>StaffName: @ViewBag.response.StaffName</p>
+// @* } *@
+
+//         private async Task<string> AuthenticateUser(LoginViewModel model)
+        // {
+        //     string externalEndpointUrl = "https://map.phed.com.ng/api/PHEDConnectApi/Login";
+
+        //     try
+        //     {
+        //         using (HttpClient client = new HttpClient())
+        //         {
+        //             HttpResponseMessage response = await client.PostAsJsonAsync(externalEndpointUrl, model);
+
+        //             if (response.IsSuccessStatusCode)
+        //             { 
+        //                 // Authentication successful, deserialize response and display specific properties
+        //                 string responseBody = await response.Content.ReadAsStringAsync();
+        //                 var responseData = JsonConvert.DeserializeObject<AuthenticationResponse>(responseBody);
+
+        //                 // Console.WriteLine("Authentication successful!");
+        //                 Console.WriteLine($"Status: {responseData.Status}");
+        //                 Console.WriteLine($"StaffId: {responseData.StaffId}");
+        //                 Console.WriteLine($"StaffName: {responseData.StaffName}");
+
+        //                 var bre = responseData.StaffId;
+
+        //                 return responseData.Status;
+
+        //             }
+        //             else if (response.StatusCode == HttpStatusCode.BadRequest)
+        //             {
+        //                 // Authentication failed due to invalid credentials
+        //                 string errorResponse = await response.Content.ReadAsStringAsync();
+        //                 Console.WriteLine($"Error: {errorResponse}");
+        //                 return "Invalid email or password.";
+        //             }
+        //             else
+        //             {
+        //                 // Other errors
+        //                 string errorResponse = await response.Content.ReadAsStringAsync();
+        //                 Console.WriteLine($"Authentication failed with status code: {response.StatusCode}");
+        //                 Console.WriteLine($"Error response: {errorResponse}");
+        //                 return $"Authentication failed with status code: {response.StatusCode}";
+        //             }
+        //         }
+        //     }
+        //     catch (HttpRequestException ex)
+        //     {
+        //         // Handle HTTP request errors
+        //         Console.WriteLine($"HTTP request failed: {ex.Message}");
+        //         return $"HTTP request failed: {ex.Message}";
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         // Handle other unexpected errors
+        //         Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+        //         return $"An unexpected error occurred: {ex.Message}";
+        //     }
+        // }
+
+
